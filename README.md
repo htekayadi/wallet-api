@@ -32,16 +32,9 @@ Ensure the following environment variables are set:
 
 ### Docker Setup
 
-To build and run the application using Docker:
-
-1. Build the Docker image:
+To build and run the application using Docker Compose:
 ```bash
-docker build -t wallet-app .
-```
-
-2. Run the Docker container:
-```bash
-docker run -d -p 80:80 -p 443:443 --name wallet-app -e RAILS_MASTER_KEY=<value> wallet-app
+$ docker-compose up --build
 ```
 
 ## Database Creation:

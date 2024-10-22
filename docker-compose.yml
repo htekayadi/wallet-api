@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  wallet_db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: wallet_api
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: wallet_api_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  web:
+    build: .
+    environment:
+      RAILS_ENV: development
+      RAILS_MASTER_KEY: a433ec6f54a5c012e600a6871ac73305
+      WALLET_API_DATABASE_PASSWORD: password
+    ports:
+      - "3000:3000"
+    depends_on:
+      - wallet_db
+    volumes:
+      - .:/rails
+
+volumes:
+  postgres_data:
