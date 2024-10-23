@@ -17,6 +17,6 @@ class User < ApplicationRecord
   end
 
   def create_wallet
-    Wallet.create(name: "#{self.email}'s Wallet", balance: 0, walletable: self)
+    Wallet.create(name: "#{self.name}'s Wallet", balance: 0, walletable: self)
   end
 end

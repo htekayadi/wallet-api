@@ -9,4 +9,23 @@ class Wallet < ApplicationRecord
     self.balance = source_transactions.sum(:amount) - target_transactions.sum(:amount)
     save!
   end
+
+  def deposit(amount)
+    raise ArgumentError, "Amount must be greater than 0" if amount <= 0
+
+    ActiveRecord::Base.transaction do
+      self.balance += amount
+      save!
+    end
+  end
+
+  def withdraw(amount)
+    raise ArgumentError, "Amount must be greater than 0" if amount <= 0
+    raise ArgumentError, "Insufficient funds" if balance < amount
+
+    ActiveRecord::Base.transaction do
+      self.balance -= amount
+      save!
+    end
+  end
 end

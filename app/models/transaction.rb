@@ -7,7 +7,9 @@ class Transaction < ApplicationRecord
 
   validate :valid_wallets
 
-  after_create :update_wallet_balances
+  scope :for_wallet, ->(wallet_id) {
+    where('source_wallet_id = ? OR target_wallet_id = ?', wallet_id, wallet_id)
+  }
 
   private
 
@@ -17,10 +19,5 @@ class Transaction < ApplicationRecord
     elsif transaction_type == 'debit' && !target_wallet.nil?
       errors.add(:target_wallet, 'must be nil for debits')
     end
-  end
-
-  def update_wallet_balances
-    source_wallet&.calculate_balance
-    target_wallet&.calculate_balance
   end
 end
