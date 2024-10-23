@@ -53,8 +53,55 @@ rails db:seed
 ```
 Ensure all tests pass before deploying.
 
-## Services
-The application includes the following services:
-- Job Queues: Managed using ActiveJob (if needed).
-- Cache Servers: Redis is recommended for caching but not configured by default.
-- Search Engines: Not applicable, unless you implement a search feature.    
+## Endpoints
+
+### Authentication
+
+#### Login
+
+**Request**
+```
+curl --location 'http://localhost:3000/login' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  	"email": "johndoe@gmail.com",
+    "password": "secure"
+    
+}'
+```
+
+**Response (success)**
+```json
+{
+	"token": "399e5cdbdd552e158482be0b125b3b9eee9f6722"
+}
+```
+
+**Response (failed)**
+```json
+{
+  "error": "Invalid email or password"
+}
+```
+
+#### Logout
+
+**Request**
+```
+curl --location --request DELETE 'http://localhost:3000/logout' \
+--header 'Authorization: a4475ab2bc1aeeb5f8054c008d69464467495921' --header 'Content-Type: application/json'
+```
+
+**Response (success)**
+```json
+{
+	"message": "Logged out successfully"
+}
+```
+
+**Response (failed)**
+```json
+{
+    "error": "Unauthorized access"
+}
+```   

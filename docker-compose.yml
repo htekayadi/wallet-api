@@ -18,7 +18,7 @@ services:
       RAILS_ENV: development
       RAILS_MASTER_KEY: a433ec6f54a5c012e600a6871ac73305
       WALLET_API_DATABASE_PASSWORD: password
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails db:migrate && bundle exec rails s -b '0.0.0.0'"  
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails db:migrate && bundle exec rails db:seed && bundle exec rails s -b '0.0.0.0'"  
     ports:
       - "3000:3000"
     depends_on:

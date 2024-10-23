@@ -1,9 +1,22 @@
-class User < WalletableEntity
+class User < ApplicationRecord
+  has_secure_password
+  
+  before_create :generate_token
+
+ 	has_one :wallet, as: :walletable, dependent: :destroy
+  
   after_create :create_wallet
 
-  private
+  def generate_token
+    self.token = SecureRandom.hex(20)
+  end
+
+  def reset_token!
+    self.token = SecureRandom.hex(20)
+    save!
+  end
 
   def create_wallet
-    Wallet.create(walletable: self, balance: 0)
+    Wallet.create(name: "#{self.email}'s Wallet", balance: 0, walletable: self)
   end
 end

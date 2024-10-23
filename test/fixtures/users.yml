@@ -2,6 +2,10 @@
 
 one:
   email: MyString
+  password_digest: MyString
+  token: MyString
 
 two:
   email: MyString
+  password_digest: MyString
+  token: MyString
